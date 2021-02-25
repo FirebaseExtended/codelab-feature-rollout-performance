@@ -1,7 +1,5 @@
 # Friendly Eats
 
-
-
 This is the source code that accompanies the Firestore Android Codelab:
 https://codelabs.developers.google.com/codelabs/firestore-android
 
