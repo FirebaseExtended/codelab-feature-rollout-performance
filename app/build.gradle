@@ -28,6 +28,8 @@ dependencies {
     // Other Firebase/Play services deps
     implementation 'com.google.firebase:firebase-auth:20.0.2'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    implementation 'com.google.firebase:firebase-config:20.0.3'
+    implementation 'com.google.firebase:firebase-analytics:18.0.2'
 
     // FirebaseUI (for authentication)
     implementation 'com.firebaseui:firebase-ui-auth:7.1.1'

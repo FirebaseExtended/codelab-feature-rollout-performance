@@ -42,6 +42,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.util.Collections;
 
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements
     private RecyclerView mRestaurantsRecycler;
     private ViewGroup mEmptyView;
 
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private FirebaseFirestore mFirestore;
     private Query mQuery;
 
@@ -88,6 +91,9 @@ public class MainActivity extends AppCompatActivity implements
 
         // View model
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+
+        // Activate the last fetched RC configs
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
 
         // Enable Firestore logging
         FirebaseFirestore.setLoggingEnabled(true);
