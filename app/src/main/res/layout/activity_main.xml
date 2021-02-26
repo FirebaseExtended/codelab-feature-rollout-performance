@@ -123,10 +123,11 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         tools:visibility="gone">
 
         <ImageView
+            android:id="@+id/empty_image_view"
             style="@style/AppTheme.PizzaGuy"
             android:src="@drawable/pizza_monster" />
 

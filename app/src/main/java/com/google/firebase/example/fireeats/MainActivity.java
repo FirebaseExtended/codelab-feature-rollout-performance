@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,9 +33,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.example.fireeats.adapter.RestaurantAdapter;
 import com.google.firebase.example.fireeats.util.FirebaseUtil;
 import com.google.firebase.example.fireeats.viewmodel.MainActivityViewModel;
@@ -43,7 +44,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.util.Collections;
 
@@ -114,6 +114,13 @@ public class MainActivity extends AppCompatActivity implements
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         signInImageUrl = mFirebaseRemoteConfig.getString(SIGN_IN_IMAGE_URL_RC_FLAG);
         Log.d(TAG, SIGN_IN_IMAGE_URL_RC_FLAG + ": " + signInImageUrl);
+
+        if (!signInImageUrl.isEmpty()) {
+            ImageView imageView = findViewById(R.id.empty_image_view);
+            Glide.with(imageView.getContext())
+                .load(signInImageUrl)
+                .into(imageView);
+        }
     }
 
     private void initRecyclerView() {
