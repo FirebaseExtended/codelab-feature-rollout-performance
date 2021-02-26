@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements
 
     private static final int LIMIT = 50;
 
+    private static final String SIGN_IN_IMAGE_URL_RC_FLAG = "sign_in_image_url";
+
     private Toolbar mToolbar;
     private TextView mCurrentSearchView;
     private TextView mCurrentSortByView;
@@ -94,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements
 
         // Activate the last fetched RC configs
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        String signInImageUrl = mFirebaseRemoteConfig.getString(SIGN_IN_IMAGE_URL_RC_FLAG);
+        Log.d(TAG, SIGN_IN_IMAGE_URL_RC_FLAG + ": " + signInImageUrl);
 
         // Enable Firestore logging
         FirebaseFirestore.setLoggingEnabled(true);
