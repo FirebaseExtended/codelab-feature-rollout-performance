@@ -96,7 +96,7 @@
         <item name="android:layout_height">150dp</item>
     </style>
 
-    <style name="SplashScreenTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme.SplashScreenTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/launch</item>
     </style>
 

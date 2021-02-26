@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements
 
     private MainActivityViewModel mViewModel;
 
+    private String signInImageUrl = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,10 +96,7 @@ public class MainActivity extends AppCompatActivity implements
         // View model
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
-        // Activate the last fetched RC configs
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        String signInImageUrl = mFirebaseRemoteConfig.getString(SIGN_IN_IMAGE_URL_RC_FLAG);
-        Log.d(TAG, SIGN_IN_IMAGE_URL_RC_FLAG + ": " + signInImageUrl);
+        loadSignInImage();
 
         // Enable Firestore logging
         FirebaseFirestore.setLoggingEnabled(true);
@@ -108,6 +107,13 @@ public class MainActivity extends AppCompatActivity implements
 
         // Filter Dialog
         mFilterDialog = new FilterDialogFragment();
+    }
+
+    private void loadSignInImage() {
+        // Load fetched sign in image url
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        signInImageUrl = mFirebaseRemoteConfig.getString(SIGN_IN_IMAGE_URL_RC_FLAG);
+        Log.d(TAG, SIGN_IN_IMAGE_URL_RC_FLAG + ": " + signInImageUrl);
     }
 
     private void initRecyclerView() {
