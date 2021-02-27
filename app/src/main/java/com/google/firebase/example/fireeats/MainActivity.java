@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements
         // View model
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
-        loadSignInImage();
+        loadEmptyImage();
 
         // Enable Firestore logging
         FirebaseFirestore.setLoggingEnabled(true);
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements
         mFilterDialog = new FilterDialogFragment();
     }
 
-    private void loadSignInImage() {
+    private void loadEmptyImage() {
         // Load fetched sign in image url
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         signInImageUrl = mFirebaseRemoteConfig.getString(SIGN_IN_IMAGE_URL_RC_FLAG);
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements
 
         if (!signInImageUrl.isEmpty()) {
             ImageView imageView = findViewById(R.id.empty_image_view);
-            Glide.with(imageView.getContext())
+            Glide.with(getApplicationContext())
                 .load(signInImageUrl)
                 .into(imageView);
         }
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // Start sign in if necessary
         if (shouldStartSignIn()) {
-            startSignIn();
+      //      startSignIn();
             return;
         }
 
