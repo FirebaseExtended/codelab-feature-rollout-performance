@@ -26,7 +26,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 public class SplashScreenActivity extends AppCompatActivity {
 
     private static final String TAG = "SplashScreenActivity";
-    private static final String SIGN_IN_IMAGE_URL_RC_FLAG = "sign_in_image_url";
+    private static final String SEASONAL_IMAGE_URL_RC_FLAG = "seasonal_image_url";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +53,12 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     private void executeTasksBasedOnRC(FirebaseRemoteConfig rcConfig) {
-        String signInImageUrl = rcConfig.getString(SIGN_IN_IMAGE_URL_RC_FLAG);
-        Log.d(TAG, SIGN_IN_IMAGE_URL_RC_FLAG + ": " + signInImageUrl);
+        String seasonalImageUrl = rcConfig.getString(SEASONAL_IMAGE_URL_RC_FLAG);
+        Log.d(TAG, SEASONAL_IMAGE_URL_RC_FLAG + ": " + seasonalImageUrl);
 
-        if (!signInImageUrl.isEmpty()) {
+        if (!seasonalImageUrl.isEmpty()) {
             Glide.with(SplashScreenActivity.this.getApplicationContext())
-                    .load(signInImageUrl)
+                    .load(seasonalImageUrl)
                     .listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(

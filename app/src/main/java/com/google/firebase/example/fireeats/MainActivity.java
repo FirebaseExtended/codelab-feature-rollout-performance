@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private static final int LIMIT = 50;
 
-    private static final String SIGN_IN_IMAGE_URL_RC_FLAG = "sign_in_image_url";
+    private static final String SEASONAL_IMAGE_URL_RC_FLAG = "seasonal_image_url";
 
     private Toolbar mToolbar;
     private TextView mCurrentSearchView;
@@ -74,8 +74,6 @@ public class MainActivity extends AppCompatActivity implements
     private RestaurantAdapter mAdapter;
 
     private MainActivityViewModel mViewModel;
-
-    private String signInImageUrl = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,13 +110,13 @@ public class MainActivity extends AppCompatActivity implements
     private void loadEmptyImage() {
         // Load fetched sign in image url
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        signInImageUrl = mFirebaseRemoteConfig.getString(SIGN_IN_IMAGE_URL_RC_FLAG);
-        Log.d(TAG, SIGN_IN_IMAGE_URL_RC_FLAG + ": " + signInImageUrl);
+        String seasonalImageUrl = mFirebaseRemoteConfig.getString(SEASONAL_IMAGE_URL_RC_FLAG);
+        Log.d(TAG, SEASONAL_IMAGE_URL_RC_FLAG + ": " + seasonalImageUrl);
 
-        if (!signInImageUrl.isEmpty()) {
+        if (!seasonalImageUrl.isEmpty()) {
             ImageView imageView = findViewById(R.id.empty_image_view);
             Glide.with(getApplicationContext())
-                .load(signInImageUrl)
+                .load(seasonalImageUrl)
                 .into(imageView);
         }
     }
