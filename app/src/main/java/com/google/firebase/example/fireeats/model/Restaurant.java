@@ -15,12 +15,9 @@
  */
  package com.google.firebase.example.fireeats.model;
 
-import com.google.firebase.firestore.IgnoreExtraProperties;
-
 /**
  * Restaurant POJO.
  */
-@IgnoreExtraProperties
 public class Restaurant {
 
     public static final String FIELD_CITY = "city";

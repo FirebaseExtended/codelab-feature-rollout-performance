@@ -27,7 +27,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.firebase.example.fireeats.model.Restaurant;
-import com.google.firebase.firestore.Query;
 
 /**
  * Dialog Fragment containing filter form.
@@ -158,17 +157,17 @@ public class FilterDialogFragment extends DialogFragment implements View.OnClick
     }
 
     @Nullable
-    private Query.Direction getSortDirection() {
+    private boolean getSortDirection() {
         String selected = (String) mSortSpinner.getSelectedItem();
         if (getString(R.string.sort_by_rating).equals(selected)) {
-            return Query.Direction.DESCENDING;
+            return false;
         } if (getString(R.string.sort_by_price).equals(selected)) {
-            return Query.Direction.ASCENDING;
+            return true;
         } if (getString(R.string.sort_by_popularity).equals(selected)) {
-            return Query.Direction.DESCENDING;
+            return false;
         }
 
-        return null;
+        return false;
     }
 
     public void resetFilters() {

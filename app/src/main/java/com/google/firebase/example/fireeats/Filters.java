@@ -19,8 +19,6 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.firebase.example.fireeats.model.Restaurant;
-import com.google.firebase.example.fireeats.util.RestaurantUtil;
-import com.google.firebase.firestore.Query;
 
 /**
  * Object for passing filters around.
@@ -31,14 +29,14 @@ public class Filters {
     private String city = null;
     private int price = -1;
     private String sortBy = null;
-    private Query.Direction sortDirection = null;
+    private boolean ascending = false;
 
     public Filters() {}
 
     public static Filters getDefault() {
         Filters filters = new Filters();
         filters.setSortBy(Restaurant.FIELD_AVG_RATING);
-        filters.setSortDirection(Query.Direction.DESCENDING);
+        filters.setSortDirection(false);
 
         return filters;
     }
@@ -91,12 +89,12 @@ public class Filters {
         this.sortBy = sortBy;
     }
 
-    public Query.Direction getSortDirection() {
-        return sortDirection;
+    public boolean getSortDirection() {
+        return ascending;
     }
 
-    public void setSortDirection(Query.Direction sortDirection) {
-        this.sortDirection = sortDirection;
+    public void setSortDirection(boolean ascending) {
+        this.ascending = ascending;
     }
 
     public String getSearchDescription(Context context) {
@@ -127,7 +125,7 @@ public class Filters {
         if (price > 0) {
             desc.append(" for ");
             desc.append("<b>");
-            desc.append(RestaurantUtil.getPriceString(price));
+            desc.append(getPriceString(price));
             desc.append("</b>");
         }
 
@@ -141,6 +139,21 @@ public class Filters {
             return context.getString(R.string.sorted_by_popularity);
         } else {
             return context.getString(R.string.sorted_by_rating);
+        }
+    }
+
+    /**
+     * Get price represented as dollar signs.
+     */
+    private static String getPriceString(int priceInt) {
+        switch (priceInt) {
+            case 1:
+                return "$";
+            case 2:
+                return "$$";
+            case 3:
+            default:
+                return "$$$";
         }
     }
 }
