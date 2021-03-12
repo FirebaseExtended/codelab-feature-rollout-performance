@@ -1,5 +1,6 @@
 package com.google.firebase.example.fireeats;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,26 +59,27 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         if (!seasonalImageUrl.isEmpty()) {
             Glide.with(SplashScreenActivity.this.getApplicationContext())
-                    .load(seasonalImageUrl)
-                    .listener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(
-                                @Nullable GlideException e,
-                                Object model, Target<Drawable> target,
-                                boolean isFirstResource) {
-                            goToMainPage();
-                            return true;
-                        }
+                .asBitmap()
+                .load(seasonalImageUrl)
+                .listener(new RequestListener<Bitmap>() {
+                    @Override
+                    public boolean onLoadFailed(
+                        @Nullable GlideException e,
+                        Object model, Target<Bitmap> target,
+                        boolean isFirstResource) {
+                        goToMainPage();
+                        return true;
+                    }
 
-                        @Override
-                        public boolean onResourceReady(Drawable resource, Object model,
-                                                       Target<Drawable> target, DataSource dataSource,
-                                                       boolean isFirstResource) {
-                            goToMainPage();
-                            return true;
-                        }
-                    })
-                    .preload();
+                    @Override
+                    public boolean onResourceReady(Bitmap resource, Object model,
+                        Target<Bitmap> target, DataSource dataSource,
+                        boolean isFirstResource) {
+                        goToMainPage();
+                        return true;
+                    }
+                })
+                .preload();
         } else {
             goToMainPage();
         }

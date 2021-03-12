@@ -1,21 +1,21 @@
 /**
  * Copyright 2017 Google Inc. All Rights Reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
- package com.google.firebase.example.fireeats;
+package com.google.firebase.example.fireeats;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -26,18 +26,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.ColorUtils;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.palette.graphics.Palette;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.firebase.example.fireeats.viewmodel.MainActivityViewModel;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 public class MainActivity extends AppCompatActivity implements
-        View.OnClickListener,
-        FilterDialogFragment.FilterListener {
+    View.OnClickListener,
+    FilterDialogFragment.FilterListener {
 
     private static final String TAG = "MainActivity";
 
@@ -50,7 +56,10 @@ public class MainActivity extends AppCompatActivity implements
     private Toolbar mToolbar;
     private TextView mCurrentSearchView;
     private TextView mCurrentSortByView;
-    private ViewGroup mEmptyView;
+    private ViewGroup mDefaultEmptyView;
+    private ViewGroup mSeasonalEmptyView;
+    private TextView mSeasonalEmptyTextView;
+
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
@@ -68,7 +77,9 @@ public class MainActivity extends AppCompatActivity implements
 
         mCurrentSearchView = findViewById(R.id.text_current_search);
         mCurrentSortByView = findViewById(R.id.text_current_sort_by);
-        mEmptyView = findViewById(R.id.view_empty);
+        mDefaultEmptyView = findViewById(R.id.default_empty_view);
+        mSeasonalEmptyView = findViewById(R.id.seasonal_empty_view);
+        mSeasonalEmptyTextView = findViewById(R.id.seasonal_empty_text_view);
 
         findViewById(R.id.filter_bar).setOnClickListener(this);
         findViewById(R.id.button_clear_filter).setOnClickListener(this);
@@ -89,9 +100,14 @@ public class MainActivity extends AppCompatActivity implements
         Log.d(TAG, SEASONAL_IMAGE_URL_RC_FLAG + ": " + seasonalImageUrl);
 
         if (!seasonalImageUrl.isEmpty()) {
-            ImageView imageView = findViewById(R.id.empty_image_view);
+            mDefaultEmptyView.setVisibility(View.GONE);
+            mSeasonalEmptyView.setVisibility(View.VISIBLE);
+
+            ImageView imageView = findViewById(R.id.seasonal_empty_image_view);
             Glide.with(getApplicationContext())
+                .asBitmap()
                 .load(seasonalImageUrl)
+                .listener(new SeasonalImageListener())
                 .into(imageView);
         }
     }
@@ -162,5 +178,27 @@ public class MainActivity extends AppCompatActivity implements
         mFilterDialog.resetFilters();
 
         onFilter(Filters.getDefault());
+    }
+
+    class SeasonalImageListener implements RequestListener<Bitmap> {
+        @Override
+        public boolean onLoadFailed(
+            @Nullable GlideException e,
+            Object model, Target<Bitmap> target, boolean isFirstResource) {
+            return false;
+        }
+
+        @Override
+        public boolean onResourceReady(Bitmap resource, Object model,
+            Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+            if (resource != null) {
+                Palette p = Palette.from(resource).generate();
+                GradientDrawable drawable = (GradientDrawable) mSeasonalEmptyTextView.getBackground();
+                drawable.setColor(
+                    ColorUtils.setAlphaComponent(p.getDarkMutedSwatch().getRgb(), 128));
+                mSeasonalEmptyTextView.setTextColor(p.getDarkMutedSwatch().getBodyTextColor());
+            }
+            return false;
+        }
     }
 }

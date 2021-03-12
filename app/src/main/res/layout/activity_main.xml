@@ -104,33 +104,79 @@
         android:layout_below="@+id/filter_bar_container"
         android:background="@drawable/bg_shadow" />
 
-    <!-- Empty list (pizza guy) view -->
-    <LinearLayout
+    <!-- Empty list view -->
+    <FrameLayout
         android:id="@+id/view_empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/filter_bar_container"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:orientation="vertical"
         android:visibility="visible"
         tools:visibility="gone">
 
+        <!-- New seasonal empty view image feature -->
+        <RelativeLayout
+            android:id="@+id/seasonal_empty_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:visibility="gone"
+            tools:visibility="gone">
+
         <ImageView
-            android:id="@+id/empty_image_view"
+            android:id="@+id/seasonal_empty_image_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
             style="@style/AppTheme.PizzaGuy"
             android:src="@drawable/pizza_monster" />
 
         <TextView
+            android:id="@+id/seasonal_empty_text_view"
             style="@style/AppTheme.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corners"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="40dp"
+            android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text="@string/message_no_results"
             android:textColor="@color/greyDisabled" />
 
-    </LinearLayout>
+        </RelativeLayout>
+
+        <!-- Default empty list (pizza guy) view -->
+        <LinearLayout
+            android:id="@+id/default_empty_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible"
+            tools:visibility="gone">
+
+            <ImageView
+                android:id="@+id/default_empty_image_view"
+                style="@style/AppTheme.PizzaGuy"
+                android:src="@drawable/pizza_monster" />
+
+            <TextView
+                style="@style/AppTheme.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/message_no_results"
+                android:textColor="@color/greyDisabled" />
+
+        </LinearLayout>
+
+    </FrameLayout>
 
     <ProgressBar
         android:id="@+id/progress_loading"
