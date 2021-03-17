@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -35,7 +36,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         final FirebaseRemoteConfig mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-            .setMinimumFetchIntervalInSeconds(30)
+            .setMinimumFetchIntervalInSeconds(1)
             .build();
         mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
         mFirebaseRemoteConfig.fetchAndActivate()
@@ -61,6 +62,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             Glide.with(SplashScreenActivity.this.getApplicationContext())
                 .asBitmap()
                 .load(seasonalImageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .listener(new RequestListener<Bitmap>() {
                     @Override
                     public boolean onLoadFailed(
