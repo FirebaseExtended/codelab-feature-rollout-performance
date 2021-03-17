@@ -16,6 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.signature.ObjectKey;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
@@ -62,7 +63,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             Glide.with(SplashScreenActivity.this.getApplicationContext())
                 .asBitmap()
                 .load(seasonalImageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .signature(new ObjectKey(Utils.getCacheUUID()))
                 .listener(new RequestListener<Bitmap>() {
                     @Override
                     public boolean onLoadFailed(

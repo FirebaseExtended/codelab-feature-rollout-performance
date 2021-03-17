@@ -35,9 +35,11 @@ import androidx.palette.graphics.Palette;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.signature.ObjectKey;
 import com.google.firebase.example.fireeats.viewmodel.MainActivityViewModel;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
@@ -107,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements
             Glide.with(getApplicationContext())
                 .asBitmap()
                 .load(seasonalImageUrl)
+                .signature(new ObjectKey(Utils.getCacheUUID()))
                 .listener(new SeasonalImageListener())
                 .into(imageView);
         }
