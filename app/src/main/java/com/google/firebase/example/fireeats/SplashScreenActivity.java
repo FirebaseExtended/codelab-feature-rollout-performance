@@ -59,12 +59,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         String seasonalImageUrl = rcConfig.getString(SEASONAL_IMAGE_URL_RC_FLAG);
         Log.d(TAG, SEASONAL_IMAGE_URL_RC_FLAG + ": " + seasonalImageUrl);
 
-        // TODO: Add the seasonal_image_url_attribute to splash_screen_trace
+        // TODO: Add a custom attribute "seasonal_image_url_attribute" to splash_screen_trace
 
         if (!seasonalImageUrl.isEmpty()) {
             // TODO: Start the splash_seasonal_image_processing here
 
-            // TODO: Add the seasonal_image_url_attribute to splash_seasonal_image_processing
+            // TODO: Add a custom attribute "seasonal_image_url_attribute" to splash_seasonal_image_processing
 
             Glide.with(SplashScreenActivity.this.getApplicationContext())
                 .asBitmap()
