@@ -1,7 +1,6 @@
 package com.google.firebase.example.fireeats;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +11,6 @@ import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -30,6 +28,8 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private static final String TAG = "SplashScreenActivity";
     private static final String SEASONAL_IMAGE_URL_RC_FLAG = "seasonal_image_url";
+
+    // TODO: Initialize splash_screen_trace
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,13 @@ public class SplashScreenActivity extends AppCompatActivity {
         String seasonalImageUrl = rcConfig.getString(SEASONAL_IMAGE_URL_RC_FLAG);
         Log.d(TAG, SEASONAL_IMAGE_URL_RC_FLAG + ": " + seasonalImageUrl);
 
+        // TODO: Add the seasonal_image_url_attribute to splash_screen_trace
+
         if (!seasonalImageUrl.isEmpty()) {
+            // TODO: Start the splash_seasonal_image_processing here
+
+            // TODO: Add the seasonal_image_url_attribute to splash_seasonal_image_processing
+
             Glide.with(SplashScreenActivity.this.getApplicationContext())
                 .asBitmap()
                 .load(seasonalImageUrl)
@@ -70,6 +76,8 @@ public class SplashScreenActivity extends AppCompatActivity {
                         @Nullable GlideException e,
                         Object model, Target<Bitmap> target,
                         boolean isFirstResource) {
+                        // TODO: Stop the splash_seasonal_image_processing here
+
                         goToMainPage();
                         return true;
                     }
@@ -78,6 +86,8 @@ public class SplashScreenActivity extends AppCompatActivity {
                     public boolean onResourceReady(Bitmap resource, Object model,
                         Target<Bitmap> target, DataSource dataSource,
                         boolean isFirstResource) {
+                        // TODO: Stop the splash_seasonal_image_processing here
+
                         goToMainPage();
                         return true;
                     }
@@ -91,5 +101,12 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void goToMainPage() {
         startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // TODO: Stop the splash_screen_trace here
     }
 }
