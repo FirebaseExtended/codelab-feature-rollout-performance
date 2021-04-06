@@ -37,6 +37,8 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         final FirebaseRemoteConfig mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+            // We only set this value low for this codelab example.
+            // See https://firebase.google.com/docs/remote-config/get-started?platform=android#throttling
             .setMinimumFetchIntervalInSeconds(1)
             .build();
         mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);

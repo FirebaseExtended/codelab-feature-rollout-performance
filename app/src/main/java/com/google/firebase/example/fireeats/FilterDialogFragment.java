@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package com.google.firebase.example.fireeats;
+package com.google.firebase.example.fireeats;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -81,8 +81,8 @@ public class FilterDialogFragment extends DialogFragment implements View.OnClick
     public void onResume() {
         super.onResume();
         getDialog().getWindow().setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     @Override
@@ -147,26 +147,25 @@ public class FilterDialogFragment extends DialogFragment implements View.OnClick
         String selected = (String) mSortSpinner.getSelectedItem();
         if (getString(R.string.sort_by_rating).equals(selected)) {
             return Restaurant.FIELD_AVG_RATING;
-        } if (getString(R.string.sort_by_price).equals(selected)) {
+        }
+        if (getString(R.string.sort_by_price).equals(selected)) {
             return Restaurant.FIELD_PRICE;
-        } if (getString(R.string.sort_by_popularity).equals(selected)) {
+        }
+        if (getString(R.string.sort_by_popularity).equals(selected)) {
             return Restaurant.FIELD_POPULARITY;
         }
 
         return null;
     }
 
-    @Nullable
     private boolean getSortDirection() {
         String selected = (String) mSortSpinner.getSelectedItem();
         if (getString(R.string.sort_by_rating).equals(selected)) {
             return false;
-        } if (getString(R.string.sort_by_price).equals(selected)) {
-            return true;
-        } if (getString(R.string.sort_by_popularity).equals(selected)) {
-            return false;
         }
-
+        if (getString(R.string.sort_by_price).equals(selected)) {
+            return true;
+        }
         return false;
     }
 

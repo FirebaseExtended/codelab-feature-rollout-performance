@@ -35,7 +35,6 @@ import androidx.palette.graphics.Palette;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -48,10 +47,6 @@ public class MainActivity extends AppCompatActivity implements
     FilterDialogFragment.FilterListener {
 
     private static final String TAG = "MainActivity";
-
-    private static final int RC_SIGN_IN = 9001;
-
-    private static final int LIMIT = 50;
 
     private static final String SEASONAL_IMAGE_URL_RC_FLAG = "seasonal_image_url";
 
