@@ -1,0 +1,129 @@
+package com.google.firebase.example.fireeats;
+
+import android.graphics.Bitmap;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.signature.ObjectKey;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.perf.FirebasePerformance;
+import com.google.firebase.perf.metrics.Trace;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+
+/**
+ * An example full-screen activity that shows and hides the system UI (i.e. status bar and
+ * navigation/system bar) with user interaction.
+ */
+public class SplashScreenActivity extends AppCompatActivity {
+
+    private static final String TAG = "SplashScreenActivity";
+    private static final String SEASONAL_IMAGE_URL_RC_FLAG = "seasonal_image_url";
+
+    // TODO: Initialize splash_screen_trace
+    private final Trace splashScreenTrace = FirebasePerformance.startTrace("splash_screen_trace");
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        final FirebaseRemoteConfig mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+            // We only set this value low for this codelab example.
+            // See https://firebase.google.com/docs/remote-config/get-started?platform=android#throttling
+            .setMinimumFetchIntervalInSeconds(1)
+            .build();
+        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
+        mFirebaseRemoteConfig.fetchAndActivate()
+            .addOnCompleteListener(this, new OnCompleteListener<Boolean>() {
+                @Override
+                public void onComplete(@NonNull Task<Boolean> task) {
+                    if (task.isSuccessful()) {
+                        boolean updated = task.getResult();
+                        Log.d(TAG, "Config params updated: " + updated);
+                    } else {
+                        Log.e(TAG, "Failed to fetch RC config");
+                    }
+                    executeTasksBasedOnRC(mFirebaseRemoteConfig);
+                }
+            });
+    }
+
+    private void executeTasksBasedOnRC(FirebaseRemoteConfig rcConfig) {
+        String seasonalImageUrl = rcConfig.getString(SEASONAL_IMAGE_URL_RC_FLAG);
+        Log.d(TAG, SEASONAL_IMAGE_URL_RC_FLAG + ": " + seasonalImageUrl);
+
+        // TODO: Add a custom attribute "seasonal_image_url_attribute" to splash_screen_trace
+        if (seasonalImageUrl.isEmpty()) {
+            splashScreenTrace.putAttribute("seasonal_image_url_attribute", "unset");
+        } else {
+            splashScreenTrace.putAttribute("seasonal_image_url_attribute", seasonalImageUrl);
+        }
+
+        if (!seasonalImageUrl.isEmpty()) {
+            // TODO: Start the splash_seasonal_image_processing here
+            final Trace seasonalImageProcessingTrace = FirebasePerformance
+                .startTrace("splash_seasonal_image_processing");
+
+            // TODO: Add a custom attribute "seasonal_image_url_attribute" to splash_seasonal_image_processing
+            seasonalImageProcessingTrace
+                .putAttribute("seasonal_image_url_attribute", seasonalImageUrl);
+
+            Glide.with(SplashScreenActivity.this.getApplicationContext())
+                .asBitmap()
+                .load(seasonalImageUrl)
+                .signature(new ObjectKey(Utils.getCacheUUID()))
+                .listener(new RequestListener<Bitmap>() {
+                    @Override
+                    public boolean onLoadFailed(
+                        @Nullable GlideException e,
+                        Object model, Target<Bitmap> target,
+                        boolean isFirstResource) {
+                        // TODO: Stop the splash_seasonal_image_processing here
+                        seasonalImageProcessingTrace.stop();
+
+                        goToMainPage();
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Bitmap resource, Object model,
+                        Target<Bitmap> target, DataSource dataSource,
+                        boolean isFirstResource) {
+                        // TODO: Stop the splash_seasonal_image_processing here
+                        seasonalImageProcessingTrace.stop();
+
+                        goToMainPage();
+                        return true;
+                    }
+                })
+                .preload();
+        } else {
+            goToMainPage();
+        }
+    }
+
+    private void goToMainPage() {
+        startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // TODO: Stop the splash_screen_trace here
+        splashScreenTrace.stop();
+    }
+}
