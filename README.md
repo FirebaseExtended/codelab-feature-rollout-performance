@@ -1,17 +1,15 @@
-# Friendly Eats
+# Performance Monitoring for a Feature Rollout
 
-This is the source code that accompanies the Firestore Android Codelab:
-https://codelabs.developers.google.com/codelabs/firestore-android
+This is the source code that accompanies the Firebase Performance Monitoring Codelab:
+https://codelabs.developers.google.com/codelabs/firebase-perf-rc-android
 
-The codelab will walk you through developing an Android restaurant recommendation
-app powered by Cloud Firestore.
+The codelab will go over instrumenting traces to monitor the app’s performance,
+rolling out a configuration change to users with Firebase Remote Config, monitoring the effect and seeing
+how we can improve the performance.
 
 <img src="docs/home.png" width="300"/>
 
+To get started, import the project under the `firebase-perf-rc-android-start` directory.
+
 If you don't want to do the codelab and would rather view the completed
-sample code, see the Firebase Android Quickstart repository:
-https://github.com/firebase/quickstart-android
-
-## Build Status
-
-[![Build Status](https://travis-ci.org/firebase/friendlyeats-android.svg?branch=master)](https://travis-ci.org/firebase/friendlyeats-android)
+sample code, see the finished code under the `firebase-perf-rc-android-finish` directory.
