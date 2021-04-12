@@ -32,18 +32,18 @@ allprojects {
         }
     }
 
-    def isBlackListed = { candidate ->
-        def blacklist = [
+    def isDenyListed = { candidate ->
+        def denylist = [
             'androidx.browser:browser'
         ]
-        return blacklist.any { word ->
+        return denylist.any { word ->
             return candidate.toString().contains(word)
         }
     }
 
     dependencyUpdates {
         rejectVersionIf {
-            isNonStable(it.candidate) || isBlackListed(it.candidate)
+            isNonStable(it.candidate) || isDenyListed(it.candidate)
         }
     }
 }
