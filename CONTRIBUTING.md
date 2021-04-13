@@ -162,7 +162,7 @@ from the main (upstream) repository:
 Please sign our [Contributor License Agreement][google-cla] (CLA) before sending pull requests. For any code
 changes to be accepted, the CLA must be signed. It's a quick process, we promise!
 
-[github]: https://github.com/firebase/friendyeats-android
+[github]: https://github.com/FirebaseExtended/firebase-perf-rc-android
 [google-cla]: https://cla.developers.google.com
 [stackoverflow]: http://stackoverflow.com/questions/tagged/firebase
 [global-gitignore]: https://help.github.com/articles/ignoring-files/#create-a-global-gitignore
