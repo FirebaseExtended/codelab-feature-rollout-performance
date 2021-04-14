@@ -1,7 +1,7 @@
 # Performance Monitoring for a Feature Rollout
 
 This is the source code that accompanies the Firebase Performance Monitoring Codelab:
-https://codelabs.developers.google.com/codelabs/firebase-perf-rc-android
+https://firebase.google.com/codelabs/feature-rollout-performance
 
 The codelab will go over instrumenting traces to monitor the app’s performance,
 rolling out a configuration change to users with Firebase Remote Config, monitoring the effect and seeing
