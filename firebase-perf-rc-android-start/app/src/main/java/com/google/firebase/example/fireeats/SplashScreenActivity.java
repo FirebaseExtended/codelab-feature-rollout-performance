@@ -95,7 +95,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                         boolean isFirstResource) {
                         // TODO: Stop the splash_seasonal_image_processing here
 
-                        goToMainPage();
+                        launchMainActivity();
                         return true;
                     }
 
@@ -105,17 +105,17 @@ public class SplashScreenActivity extends AppCompatActivity {
                         boolean isFirstResource) {
                         // TODO: Stop the splash_seasonal_image_processing here
 
-                        goToMainPage();
+                        launchMainActivity();
                         return true;
                     }
                 })
                 .preload();
         } else {
-            goToMainPage();
+            launchMainActivity();
         }
     }
 
-    private void goToMainPage() {
+    private void launchMainActivity() {
         startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
         finish();
     }
